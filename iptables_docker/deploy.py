@@ -29,6 +29,7 @@ import time
 import signal
 
 redirect_cmd = "iptables -t nat -A PREROUTING -p tcp" \
+               " ! -d 127.0.0.1,169.254.169.254,10.0.0.0/8,172.31.0.0/12,192.168.0.0/16" \
                " --dport 80 -j REDIRECT --to 3129 -w"
 remove_redirect_cmd = redirect_cmd.replace(' -A ', ' -D ')
 
