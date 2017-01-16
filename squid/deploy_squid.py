@@ -51,9 +51,11 @@ def main():
     squid_conf_entries.append('maximum_object_size %s MB' % max_object_size)
     squid_conf_entries.append('cache_dir ufs /var/cache/squid3 %s 16 256' %
                               disk_cache_size)
+    squid_conf_entries.append('access_log stdio:/dev/stdout squid')
+
+    subprocess.check_call("chown proxy.proxy /dev/stdout", shell=True)
 
     with open("/etc/squid3/squid.conf", 'w') as conf_fh:
-
         if not squid_directives_only:
             with open("/etc/squid3/squid.conf.in", "r") as preconf:
                 conf_fh.write(preconf.read())
